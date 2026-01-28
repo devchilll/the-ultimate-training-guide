@@ -1,0 +1,49 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor/IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Python (for lab notebooks)
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+*.egg-info/
+.eggs/
+*.egg
+.ipynb_checkpoints/
+venv/
+.venv/
+env/
+
+# Model files (too large for git)
+*.bin
+*.safetensors
+*.gguf
+*.pt
+*.pth
+*.ckpt
+
+# Data files
+*.csv
+*.json
+*.jsonl
+*.parquet
+
+# Logs
+*.log
+logs/
+wandb/
+runs/
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
