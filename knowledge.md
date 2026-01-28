@@ -32,19 +32,25 @@
 *Focus: Algorithms that modify model behavior and reasoning.*
 
 ### SFT (Supervised Fine-Tuning) 2.0
-- **Cold-Start Bootstrapping**: Training on reasoning traces vs. standard instruction-response pairs
+- **Cold-Start Bootstrapping**: The critical first phase — curating reasoning traces that RL can score
+  - Quality of reasoning data directly determines RL success
+  - Focus on long-form Chain-of-Thought (CoT) with `<think>...</think>` formatting
 - **Instruction Backtranslation**: Reverse-engineering instructions from raw web documents
 - **Chat Templates**: Proper formatting with system/user/assistant roles
 
 ### Preference Optimization
 - **DPO (Direct Preference Optimization)**: Policy optimization without explicit reward models
-  - Key insight: Reparameterizes RLHF objective, directly optimizes policy from preferences
+  - Key insight: Reparameterizes RLHF objective — **RM-free** (no separate reward model needed)
+  - Derives optimal policy directly from preference pairs
 - **SafeDPO**: Integrating safety constraints into the loss function
 - **IPO / KTO**: Alternatives that address DPO's distribution shift issues
 - **ORPO**: Odds-ratio preference optimization (no reference model needed)
 
 ### Reinforcement Learning for Reasoning
-- **GRPO (Group Relative Policy Optimization)**: DeepSeek-R1's verifier-based reasoning paradigm
+- **GRPO (Group Relative Policy Optimization)**: 🔥 The 2026 differentiator
+  - Eliminates the Critic model → **50% VRAM savings** vs PPO
+  - Uses **group average** for advantage estimation instead of learned value function
+  - Powers DeepSeek-R1's multi-step reasoning capabilities
 - **PPO (Proximal Policy Optimization)**: Actor-Critic with clipped surrogate objective
 - **REINFORCE with baseline**: Simpler alternative for reward-based learning
 - **Reward Models**: Training verifiers for outcome and process supervision
@@ -55,8 +61,8 @@
 - **Red-teaming integration**: Iterative safety training from adversarial prompts
 
 ### Key Interview Topics
-- Derive the DPO loss from the RLHF objective
-- Explain advantage estimation in PPO
+- Derive the DPO loss from the RLHF objective (explain why RM-free)
+- **Explain GRPO**: How does eliminating the Critic save 50% VRAM? What's group-relative advantage?
 - When to use DPO vs. PPO vs. GRPO?
 - Compare RLHF vs RLAIF: tradeoffs and use cases
 - How do process reward models differ from outcome reward models?
@@ -118,12 +124,20 @@
 - **Quantization**: AWQ, GPTQ, GGUF for efficient deployment
 - **Continuous Batching**: Maximize GPU utilization with dynamic batching
 
+### Agentic Context Engineering (ACE)
+- **The survival path**: Static prompt engineering is a "depreciating asset"
+- **Generator**: Surfaces reasoning trajectories and strategies
+- **Reflector**: Extracts concrete "lessons" from successes and failures  
+- **Curator**: Applies incremental "delta updates" to the context playbook
+- **Key insight**: Design systems where context evolves as a self-improving "playbook"
+
 ### Key Interview Topics
 - Explain how LoRA reduces memory requirements
 - How does PagedAttention improve throughput?
 - Design a multi-tenant system serving 1000 private LoRA adapters
 - Explain the tradeoffs of speculative decoding
 - How does Flash Attention achieve O(N) memory?
+- **Design an ACE loop**: How would you build a self-improving context system?
 
 → *Hands-on: See infra setup in [handson.md](./handson.md#stage-4)*
 

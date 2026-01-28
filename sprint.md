@@ -14,7 +14,8 @@ For a 2-3 week prep, focus on **P0 items only**. If you have extra time, add P1.
 |-------|----------|-----|
 | Self-Attention (QKV, softmax, multi-head) | **P0** | Asked in every coding interview |
 | Cross-entropy loss | **P0** | Must understand gradient flow |
-| Temperature in sampling | **P0** | Common conceptual question |
+| Temperature vs Top-P tradeoffs | **P0** | Critical for reasoning: high temp aids RL exploration, low temp for verification |
+| PagedAttention (vLLM) | **P0** | Solution for memory fragmentation in agentic workflows |
 | AdamW optimizer | **P1** | Know the basics, not derivation |
 | Tokenization (BPE) | **P1** | Understand tradeoffs |
 | Positional encodings (RoPE) | **P2** | Nice to know details |
@@ -25,11 +26,11 @@ For a 2-3 week prep, focus on **P0 items only**. If you have extra time, add P1.
 
 | Topic | Priority | Why |
 |-------|----------|-----|
-| **SFT basics** (instruction tuning) | **P0** | Foundation of everything |
-| **DPO loss derivation** | **P0** | Most common preference method, asked in depth |
+| **Cold-Start SFT** (reasoning data curation) | **P0** | The quality of reasoning data bootstraps RL success |
+| **DPO loss derivation** (why RM-free) | **P0** | Must explain why it eliminates reward model vs PPO |
+| **GRPO** (DeepSeek-R1 style) | **P0** | 🔥 THE differentiator for 2026 — eliminates Critic, 50% VRAM savings |
 | **RLHF pipeline** (reward model → PPO) | **P0** | Must understand the classic approach |
 | Chat templates | **P0** | Practical, easy to mess up |
-| GRPO (DeepSeek-R1 style) | **P1** | Hot topic, but DPO more fundamental |
 | PPO advantage estimation | **P1** | Know conceptually, less likely to derive |
 | KTO / IPO / ORPO | **P2** | Alternatives, mention if asked |
 | SafeDPO | **P2** | Niche safety topic |
@@ -42,8 +43,8 @@ For a 2-3 week prep, focus on **P0 items only**. If you have extra time, add P1.
 |-------|----------|-----|
 | **Rejection Sampling (RFT)** | **P0** | Core technique for quality filtering |
 | **Distillation** | **P0** | How smaller models learn from larger |
+| **Chain-of-thought formatting** | **P0** | Essential for reasoning traces (`<think>` tags) |
 | Self-Instruct / Evol-Instruct | **P1** | Know the concepts |
-| Chain-of-thought formatting | **P1** | Practical for reasoning models |
 | Decontamination | **P2** | Important but rarely deep-dived |
 
 ---
@@ -54,8 +55,9 @@ For a 2-3 week prep, focus on **P0 items only**. If you have extra time, add P1.
 |-------|----------|-----|
 | **LoRA math** (why low-rank works) | **P0** | Frequently asked, derive memory savings |
 | **Flash Attention** (why O(N) memory) | **P0** | Common systems question |
+| **PagedAttention** (vLLM) | **P0** | Memory fragmentation solution for agents |
+| **ACE Framework** (Generator/Reflector/Curator) | **P0** | Self-improving context loops for agentic systems |
 | Quantization basics (4-bit, 8-bit) | **P1** | Know tradeoffs |
-| vLLM / PagedAttention | **P1** | Know concept, not implementation |
 | Gradient checkpointing | **P1** | Practical for training |
 | S-LoRA / Multi-tenant | **P2** | Advanced serving topic |
 | Speculative decoding | **P2** | Nice to mention |
@@ -81,6 +83,7 @@ For a 2-3 week prep, focus on **P0 items only**. If you have extra time, add P1.
 |-------|----------|-----|
 | **Implement attention from scratch** | **P0** | Coding round staple |
 | **Top-K / Top-P sampling** | **P0** | Common implementation question |
+| **Explain GRPO vs PPO tradeoffs** | **P0** | The 2026 differentiator question |
 | Custom reward functions | **P1** | For reasoning model interviews |
 | Debugging NaN losses | **P1** | Practical debugging |
 | System design (distributed training) | **P2** | Senior roles only |
@@ -92,9 +95,9 @@ For a 2-3 week prep, focus on **P0 items only**. If you have extra time, add P1.
 | Stage | Priority | Time | Rationale |
 |-------|----------|------|-----------|
 | **Stage 0: nanoGPT** | **P0** | 3-4 days | Builds core intuition, coding interview prep |
-| **Stage 1: SFT with LoRA** | **P0** | 4-5 days | Most practical skill, demonstrates hands-on |
-| **Stage 2: DPO** | **P1** | 3-4 days | Important but can skip if short on time |
-| Stage 3: GRPO | P2 | — | Skip for 2-3 week sprint |
+| **Stage 1: Cold-Start Data Curation** | **P0** | 4-5 days | Curate CoT reasoning data, not just run LoRA scripts |
+| **Stage 3: Mini-GRPO** | **P0** | 3-4 days | 🔥 THE wow factor — reward `<think>` tags with Unsloth |
+| Stage 2: DPO | P1 | 2-3 days | Style/safety alignment, less critical than GRPO |
 | Stage 4: Tool Use | P2 | — | Skip for 2-3 week sprint |
 | Stage 5: Eval | P1 | 2 days | At least build simple LLM-as-Judge |
 
@@ -102,46 +105,53 @@ For a 2-3 week prep, focus on **P0 items only**. If you have extra time, add P1.
 
 ## 📅 Recommended 2-3 Week Schedule
 
-### Week 1: Foundations + SFT
+### Week 1: Foundations + Data Curation
 | Day | Focus | Hands-On |
 |-----|-------|----------|
-| 1-2 | Attention, loss functions, sampling | Implement attention from scratch |
+| 1-2 | Attention, loss functions, sampling tradeoffs | Implement attention from scratch |
 | 3-4 | Train nanoGPT | Stage 0 complete |
-| 5-7 | SFT, LoRA math, chat templates | Stage 1 with Unsloth |
+| 5-7 | Cold-Start SFT, CoT data formatting | Curate reasoning dataset with `<think>` tags |
 
-### Week 2: Preference Learning + Eval
+### Week 2: GRPO + Core Concepts
 | Day | Focus | Hands-On |
 |-----|-------|----------|
-| 1-2 | DPO derivation, RLHF pipeline | Read DPO paper closely |
-| 3-4 | Flash Attention, LoRA memory math | Practice explanations |
-| 5-6 | LLM-as-Judge, reward hacking | Build simple eval |
-| 7 | Mock interview practice | — |
+| 1-2 | GRPO deep-dive: group averages, no Critic | Read DeepSeek-R1 paper |
+| 3-4 | Mini-GRPO lab | Reward `<think>` tags with Unsloth |
+| 5-6 | DPO derivation (why RM-free), Flash Attention | Practice explanations |
+| 7 | LLM-as-Judge, reward hacking | — |
 
-### Week 3 (if available): Polish
+### Week 3 (if available): Polish + ACE
 | Day | Focus | Hands-On |
 |-----|-------|----------|
-| 1-3 | DPO hands-on | Stage 2 if time |
-| 4-5 | GRPO concepts (no hands-on) | Read DeepSeek-R1 paper |
-| 6-7 | Mock interviews, weak areas | — |
+| 1-2 | ACE Framework (Generator/Reflector/Curator) | Design self-improving context loop |
+| 3-4 | PagedAttention, LoRA memory math | Practice system design explanations |
+| 5-7 | Mock interviews, weak areas | — |
 
 ---
 
 ## ⚡ P0 Checklist (Must Complete)
 
-### Concepts
+### Core Concepts
 - [ ] Can implement multi-head attention from scratch
-- [ ] Can derive DPO loss from RLHF objective
+- [ ] Can derive DPO loss from RLHF objective (and explain why it's RM-free)
 - [ ] Can explain LoRA memory savings mathematically
 - [ ] Can explain Flash Attention's memory efficiency
-- [ ] Understand rejection sampling for data quality
+- [ ] Can explain PagedAttention for agentic memory management
 - [ ] Know RLHF pipeline: SFT → Reward Model → PPO
+
+### 🔥 Reasoning Model Concepts (2026 Critical)
+- [ ] Can explain GRPO: eliminates Critic (50% VRAM savings), uses group average for advantage
+- [ ] Understand Cold-Start SFT: curating reasoning data that RL can score
+- [ ] Know Temperature vs Top-P tradeoffs for reasoning (exploration vs verification)
+- [ ] Can explain ACE Framework for self-improving context
 
 ### Hands-On
 - [ ] Trained nanoGPT from scratch (Stage 0)
-- [ ] Fine-tuned a model with LoRA/Unsloth (Stage 1)
+- [ ] Curated CoT dataset with `<think>` tags (Stage 1)
+- [ ] Ran mini-GRPO rewarding reasoning traces (Stage 3)
 - [ ] Can explain every line of a training loop
 
 ### Paper Deep-Dives
-- [ ] DPO paper (derive the math)
+- [ ] DPO paper (derive the math, understand RM-free insight)
+- [ ] DeepSeek-R1 paper (**deep dive** — GRPO is P0 now)
 - [ ] LoRA paper (understand rank selection)
-- [ ] Skim DeepSeek-R1 (know GRPO concept)
