@@ -130,7 +130,7 @@
 - How do you detect reward hacking?
 - Limitations of LLM-as-a-Judge
 
-→ *Hands-on: See evaluation lab in [handson.md](./handson.md#stage-4)*
+→ *Hands-on: See evaluation lab in [handson.md](./handson.md#stage-5)*
 
 ---
 
