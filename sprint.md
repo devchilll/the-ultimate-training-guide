@@ -1,0 +1,147 @@
+# 🚀 2-3 Week Sprint Guide
+
+> **Priority Levels**: P0 = Must know (interview critical) | P1 = Important (likely to come up) | P2 = Good to know (differentiator)
+
+For a 2-3 week prep, focus on **P0 items only**. If you have extra time, add P1.
+
+---
+
+## 📚 Knowledge Priorities
+
+### Pillar 0: Foundations
+
+| Topic | Priority | Why |
+|-------|----------|-----|
+| Self-Attention (QKV, softmax, multi-head) | **P0** | Asked in every coding interview |
+| Cross-entropy loss | **P0** | Must understand gradient flow |
+| Temperature in sampling | **P0** | Common conceptual question |
+| AdamW optimizer | **P1** | Know the basics, not derivation |
+| Tokenization (BPE) | **P1** | Understand tradeoffs |
+| Positional encodings (RoPE) | **P2** | Nice to know details |
+
+---
+
+### Pillar 1: Alignment Methodologies
+
+| Topic | Priority | Why |
+|-------|----------|-----|
+| **SFT basics** (instruction tuning) | **P0** | Foundation of everything |
+| **DPO loss derivation** | **P0** | Most common preference method, asked in depth |
+| **RLHF pipeline** (reward model → PPO) | **P0** | Must understand the classic approach |
+| Chat templates | **P0** | Practical, easy to mess up |
+| GRPO (DeepSeek-R1 style) | **P1** | Hot topic, but DPO more fundamental |
+| PPO advantage estimation | **P1** | Know conceptually, less likely to derive |
+| KTO / IPO / ORPO | **P2** | Alternatives, mention if asked |
+| SafeDPO | **P2** | Niche safety topic |
+
+---
+
+### Pillar 2: Synthetic Data
+
+| Topic | Priority | Why |
+|-------|----------|-----|
+| **Rejection Sampling (RFT)** | **P0** | Core technique for quality filtering |
+| **Distillation** | **P0** | How smaller models learn from larger |
+| Self-Instruct / Evol-Instruct | **P1** | Know the concepts |
+| Chain-of-thought formatting | **P1** | Practical for reasoning models |
+| Decontamination | **P2** | Important but rarely deep-dived |
+
+---
+
+### Pillar 3: Infrastructure
+
+| Topic | Priority | Why |
+|-------|----------|-----|
+| **LoRA math** (why low-rank works) | **P0** | Frequently asked, derive memory savings |
+| **Flash Attention** (why O(N) memory) | **P0** | Common systems question |
+| Quantization basics (4-bit, 8-bit) | **P1** | Know tradeoffs |
+| vLLM / PagedAttention | **P1** | Know concept, not implementation |
+| Gradient checkpointing | **P1** | Practical for training |
+| S-LoRA / Multi-tenant | **P2** | Advanced serving topic |
+| Speculative decoding | **P2** | Nice to mention |
+| Model merging (TIES, DARE) | **P2** | Niche |
+
+---
+
+### Pillar 4: Evaluation
+
+| Topic | Priority | Why |
+|-------|----------|-----|
+| **LLM-as-a-Judge** | **P0** | Standard eval method |
+| **Reward hacking** | **P0** | Critical alignment concept |
+| Standard benchmarks (GSM8K, MMLU) | **P1** | Know what they measure |
+| Red-teaming basics | **P1** | Safety interviews |
+| Refusal calibration | **P2** | Anthropic-specific |
+
+---
+
+### Pillar 5: Interview Skills
+
+| Topic | Priority | Why |
+|-------|----------|-----|
+| **Implement attention from scratch** | **P0** | Coding round staple |
+| **Top-K / Top-P sampling** | **P0** | Common implementation question |
+| Custom reward functions | **P1** | For reasoning model interviews |
+| Debugging NaN losses | **P1** | Practical debugging |
+| System design (distributed training) | **P2** | Senior roles only |
+
+---
+
+## 🧪 Hands-On Priorities
+
+| Stage | Priority | Time | Rationale |
+|-------|----------|------|-----------|
+| **Stage 0: nanoGPT** | **P0** | 3-4 days | Builds core intuition, coding interview prep |
+| **Stage 1: SFT with LoRA** | **P0** | 4-5 days | Most practical skill, demonstrates hands-on |
+| **Stage 2: DPO** | **P1** | 3-4 days | Important but can skip if short on time |
+| Stage 3: GRPO | P2 | — | Skip for 2-3 week sprint |
+| Stage 4: Tool Use | P2 | — | Skip for 2-3 week sprint |
+| Stage 5: Eval | P1 | 2 days | At least build simple LLM-as-Judge |
+
+---
+
+## 📅 Recommended 2-3 Week Schedule
+
+### Week 1: Foundations + SFT
+| Day | Focus | Hands-On |
+|-----|-------|----------|
+| 1-2 | Attention, loss functions, sampling | Implement attention from scratch |
+| 3-4 | Train nanoGPT | Stage 0 complete |
+| 5-7 | SFT, LoRA math, chat templates | Stage 1 with Unsloth |
+
+### Week 2: Preference Learning + Eval
+| Day | Focus | Hands-On |
+|-----|-------|----------|
+| 1-2 | DPO derivation, RLHF pipeline | Read DPO paper closely |
+| 3-4 | Flash Attention, LoRA memory math | Practice explanations |
+| 5-6 | LLM-as-Judge, reward hacking | Build simple eval |
+| 7 | Mock interview practice | — |
+
+### Week 3 (if available): Polish
+| Day | Focus | Hands-On |
+|-----|-------|----------|
+| 1-3 | DPO hands-on | Stage 2 if time |
+| 4-5 | GRPO concepts (no hands-on) | Read DeepSeek-R1 paper |
+| 6-7 | Mock interviews, weak areas | — |
+
+---
+
+## ⚡ P0 Checklist (Must Complete)
+
+### Concepts
+- [ ] Can implement multi-head attention from scratch
+- [ ] Can derive DPO loss from RLHF objective
+- [ ] Can explain LoRA memory savings mathematically
+- [ ] Can explain Flash Attention's memory efficiency
+- [ ] Understand rejection sampling for data quality
+- [ ] Know RLHF pipeline: SFT → Reward Model → PPO
+
+### Hands-On
+- [ ] Trained nanoGPT from scratch (Stage 0)
+- [ ] Fine-tuned a model with LoRA/Unsloth (Stage 1)
+- [ ] Can explain every line of a training loop
+
+### Paper Deep-Dives
+- [ ] DPO paper (derive the math)
+- [ ] LoRA paper (understand rank selection)
+- [ ] Skim DeepSeek-R1 (know GRPO concept)
