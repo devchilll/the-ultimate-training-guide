@@ -1,171 +1,161 @@
-This repository structure is designed to reflect the 2025-2026 industry pivot from "Prompt Engineering" to "Model Construction." It organizes technical methodologies, infrastructure, and career preparation into a cohesive learning and reference path.
+# Post-Training & Alignment: Knowledge Guide
 
-# Post-Training, Model Alignment, & AI Interview Repository Structure
+> A comprehensive reference for LLM post-training roles at Tier-0 labs (DeepMind, Anthropic, OpenAI).
+
+---
+
+## 🧱 Pillar 0: Foundations
+
+*Focus: Core building blocks every candidate must understand deeply.*
+
+### Transformer Architecture
+- **Self-Attention**: Query-Key-Value mechanics, softmax normalization, multi-head attention
+- **Positional Encodings**: Sinusoidal vs. learned vs. RoPE (Rotary Position Embeddings)
+- **Layer Normalization**: Pre-norm vs. post-norm architectures
+
+### Training Fundamentals
+- **Loss Functions**: Cross-entropy, KL divergence, policy gradient objectives
+- **Optimization**: AdamW, learning rate schedules, gradient clipping
+- **Tokenization**: BPE, SentencePiece, vocabulary construction tradeoffs
+
+### Key Interview Topics
+- Implement attention from scratch (NumPy or PyTorch)
+- Explain why we use softmax temperature in sampling
+- Derive the gradient of cross-entropy loss
+
+→ *Hands-on: See Stage 0 in [handson.md](./handson.md#stage-0)*
+
+---
 
 ## 🏗️ Pillar 1: Alignment Methodologies
 
-*Focus: Mastering the algorithms that modify model behavior and reasoning.*
+*Focus: Algorithms that modify model behavior and reasoning.*
 
-* **SFT (Supervised Fine-Tuning) 2.0**
-* Cold-Start Bootstrapping: Reasoning traces vs. standard instruction following.
+### SFT (Supervised Fine-Tuning) 2.0
+- **Cold-Start Bootstrapping**: Training on reasoning traces vs. standard instruction-response pairs
+- **Instruction Backtranslation**: Reverse-engineering instructions from raw web documents
+- **Chat Templates**: Proper formatting with system/user/assistant roles
 
+### Preference Optimization
+- **DPO (Direct Preference Optimization)**: Policy optimization without explicit reward models
+  - Key insight: Reparameterizes RLHF objective, directly optimizes policy from preferences
+- **SafeDPO**: Integrating safety constraints into the loss function
+- **IPO / KTO**: Alternatives that address DPO's distribution shift issues
 
-* Instruction Backtranslation: Reverse-engineering instructions from raw web docs.
+### Reinforcement Learning for Reasoning
+- **GRPO (Group Relative Policy Optimization)**: DeepSeek-R1's verifier-based reasoning paradigm
+- **PPO (Proximal Policy Optimization)**: Actor-Critic with clipped surrogate objective
+- **REINFORCE with baseline**: Simpler alternative for reward-based learning
 
+### Key Interview Topics
+- Derive the DPO loss from the RLHF objective
+- Explain advantage estimation in PPO
+- When to use DPO vs. PPO vs. GRPO?
 
+→ *Hands-on: See Stages 1-3 in [handson.md](./handson.md#stage-1)*
 
-
-* **Preference Optimization**
-* DPO (Direct Preference Optimization): Mathematics of policy optimization without reward models.
-
-
-* SafeDPO: Integrating safety constraints directly into the loss function.
-
-
-
-
-* **Reinforcement Learning (RL) for Reasoning**
-* GRPO (Group Relative Policy Optimization): The DeepSeek-R1 paradigm for verifier-based reasoning.
-
-
-* PM4GRPO: Reasoning-aware GRPO using Process Mining for step-level conformance checking.
-
-
-* PPO (Proximal Policy Optimization): When to use Actor-Critic architectures.
-
-
-
-
+---
 
 ## 🧪 Pillar 2: Synthetic Data & Data Flywheels
 
 *Focus: Building self-improving systems to overcome data scarcity.*
 
-* **Generation Techniques**
-* Self-Instruct / Evol-Instruct: Using teacher models (Claude 3.5/GPT-4o) to evolve complexity.
-
-
-* Chain-of-Thought (CoT) Curation: Formatting `<think>...</think>` tags for reasoning models.
-
-
-
-
-* **Filtering & Verification**
-* Rejection Sampling (RFT): Generating  candidates and keeping only verifiable correct answers.
-
-
-* Distillation: Transferring high-quality reasoning traces from large models to small models.
-
-
-
-
-
-## 🧠 Pillar 3: Agentic Context Engineering (ACE)
-
-*Focus: Moving beyond static prompts to dynamic, evolving memory systems.*
-
-* **The ACE Framework**
-* Generator: Surfacing reasoning trajectories and strategies.
-
-
-* Reflector: Extracting concrete "lessons" from successes and failures.
-
-
-* Curator: Applying incremental "delta updates" to the context playbook.
-
-
-
-
-* **Context Governance**
-* Preventing Context Collapse: Strategies to manage long-horizon performance.
-
-
-
-
-
-## 🛠️ Pillar 4: Engineering Skeleton & Infra
-
-*Focus: Efficiently training and serving specialization-heavy models.*
-
-* **Fine-Tuning Frameworks**
-* Unsloth: Fast LoRA/QLoRA and memory-efficient GRPO training.
-
-
-* Axolotl & LLaMA-Factory: Configuration-driven pipelines for production.
-
-
-
-
-* **Inference & Serving**
-* vLLM & PagedAttention: Dynamic KV cache management for long-context agents.
-
-
-* Multi-LoRA Serving: Dynamic loading of client-specific adapters on a frozen base.
-
-
-* Quantization: AWQ, GPTQ, and GGUF for edge and consumer-grade deployment.
-
-
-
-
-
-## ⚖️ Pillar 5: Evaluation & Tooling
-
-*Focus: Quantifying model performance in high-stakes environments.*
-
-* **Evaluation Frameworks**
-* LLM-as-a-Judge: Automated scoring pipelines using rubric-based critiques.
-
-
-* BFCL (Berkeley Function Calling Leaderboard): Benchmarking tool-use and schema compliance.
-
-
-
-
-* **Observability**
-* Ragas & DeepEval: Metrics for retrieval relevancy and faithfulness.
-
-
-
-
-
-## 💼 Pillar 6: Interview & Career Master Guide
-
-*Focus: Navigating "Tier 0" lab recruitment (DeepMind, Anthropic, etc.).*
-
-* **ML System Design**
-* Designing million-token context training systems.
-
-
-* Optimizing for agentic feedback loops and "aha moment" reasoning.
-
-
-
-
-* **Coding & Algorithms**
-* Hand-writing Attention mechanisms, matrix ops, and Top-K sampling.
-
-
-* Implementing custom reward functions (Regex, code execution).
-
-
-
-
-* **Portfolio Strategy**
-* Moving from "Wrappers" to "Reasoning Engines".
-
-
-* Evidence of "Data Curation" expertise vs. simple "Prompt Engineering".
-
-
-
-
+### Generation Techniques
+- **Self-Instruct / Evol-Instruct**: Using teacher models to evolve instruction complexity
+- **Chain-of-Thought Curation**: Formatting `<think>...</think>` tags for reasoning models
+- **Persona-based generation**: Creating diverse synthetic personas for coverage
+
+### Filtering & Verification
+- **Rejection Sampling (RFT)**: Generate N candidates, keep only verifiably correct answers
+- **Distillation**: Transfer reasoning traces from large models (GPT-4/Claude) to smaller models
+- **Decontamination**: Ensuring training data doesn't overlap with benchmarks
+
+### Key Interview Topics
+- Design a data flywheel for improving math reasoning
+- How do you verify synthetic data quality at scale?
+- Tradeoffs between distillation and RL-based reasoning
+
+→ *Hands-on: See Stage 1 data curation in [handson.md](./handson.md#stage-1)*
 
 ---
 
-### Change Summary
+## 🛠️ Pillar 3: Infrastructure & Tooling
 
-I have constructed this tree-like structure based on the technical pillars identified in the research, specifically categorizing methodologies (GRPO/DPO), data curation (Backtranslation), and infrastructure (vLLM/Unsloth) as requested. I also included the specific interview focus areas (ML System Design, algorithmic coding) mentioned in the career strategy section of the report. 
+*Focus: Efficiently training and serving specialization-heavy models.*
 
+### Fine-Tuning Frameworks
+- **Unsloth**: 2x faster LoRA/QLoRA with 70% VRAM savings
+- **Axolotl**: YAML-driven training pipelines with extensive config options
+- **LLaMA-Factory**: Web UI and CLI for production fine-tuning
 
-----------------------------------------------------------------------
+### Parameter-Efficient Fine-Tuning (PEFT)
+- **LoRA / QLoRA**: Low-rank adaptation of attention matrices
+- **DoRA**: Weight-decomposed low-rank adaptation
+- **Adapter layers**: Bottleneck modules between transformer layers
+
+### Inference & Serving
+- **vLLM & PagedAttention**: Dynamic KV cache management for long contexts
+- **Multi-LoRA Serving**: Hot-swapping domain-specific adapters on frozen base
+- **Quantization**: AWQ, GPTQ, GGUF for efficient deployment
+
+### Key Interview Topics
+- Explain how LoRA reduces memory requirements
+- How does PagedAttention improve throughput?
+- Design a system for serving 100 different LoRA adapters
+
+→ *Hands-on: See infra setup in [handson.md](./handson.md#stage-4)*
+
+---
+
+## ⚖️ Pillar 4: Evaluation & Benchmarking
+
+*Focus: Quantifying model performance rigorously.*
+
+### Evaluation Frameworks
+- **LLM-as-a-Judge**: Automated scoring with rubric-based critiques
+- **BFCL (Berkeley Function Calling)**: Tool-use and schema compliance benchmarks
+- **MMLU / GSM8K / HumanEval**: Standard capability benchmarks
+
+### Safety & Alignment Evaluation
+- **Red-teaming**: Adversarial testing for jailbreaks and harmful outputs
+- **Refusal rate analysis**: Measuring over/under-refusal on sensitive topics
+- **Reward hacking detection**: Identifying when models game the reward
+
+### Observability
+- **Ragas & DeepEval**: Metrics for RAG systems (retrieval relevancy, faithfulness)
+- **Training curves**: Loss, gradient norms, activation statistics
+
+### Key Interview Topics
+- Design an evaluation suite for a customer service agent
+- How do you detect reward hacking?
+- Limitations of LLM-as-a-Judge
+
+→ *Hands-on: See evaluation lab in [handson.md](./handson.md#stage-4)*
+
+---
+
+## 💼 Pillar 5: Interview Preparation
+
+*Focus: Navigating Tier-0 lab recruitment (DeepMind, Anthropic, OpenAI).*
+
+### ML System Design
+- Designing million-token context training systems
+- Optimizing for agentic feedback loops and "aha moment" reasoning
+- Distributed training: FSDP, DeepSpeed, pipeline parallelism
+
+### Coding & Algorithms
+- Hand-write: Attention mechanism, Top-K sampling, beam search
+- Implement: Custom reward functions (regex matching, code execution)
+- Debug: Gradient issues, training instabilities, NaN losses
+
+### Portfolio Strategy
+- Move from "Wrappers" → "Reasoning Engines" in your projects
+- Demonstrate data curation expertise, not just prompt engineering
+- Open-source contributions to training frameworks (Unsloth, Axolotl, vLLM)
+
+### Recommended Study Plan
+1. **Weeks 1-2**: Foundations + Stage 0 hands-on
+2. **Weeks 3-4**: SFT deep-dive + Stage 1 hands-on
+3. **Weeks 5-6**: DPO/GRPO + Stages 2-3 hands-on
+4. **Weeks 7-8**: Eval + Tool-use + Stage 4 hands-on
+5. **Weeks 9+**: Mock interviews + portfolio projects
