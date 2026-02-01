@@ -1,4 +1,4 @@
-# Post-Training & Alignment Interview Prep Guide
+# Post-Training & Alignment Prep Guide
 
 > [!NOTE]
 > This guide was created with the help of publicly available LLMs and curated resources. It is intended as a learning reference, not professional career advice. Always verify information and do your own research.
