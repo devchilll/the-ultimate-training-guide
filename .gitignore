@@ -52,3 +52,5 @@ runs/
 
 # Things I don't want to include 
 /post-training/*
+labs/
+infra/
